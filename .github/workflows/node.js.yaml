@@ -1,0 +1,41 @@
+name: Node.js Express CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the code
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    # Step 3: Install dependencies
+    - name: Install dependencies
+      run: npm install
+
+    # Step 4: Run tests (optional, if you have any)
+    - name: Run tests
+      run: npm test
+
+    # Step 5: Build or start app (for test purposes)
+    - name: Start the app (test only)
+      run: |
+        nohup node index.js &
+        sleep 5
+        curl http://localhost:3000
+
+    # Step 6: Optional - Deploy step (if you have deployment logic)
+    # For example, deploy to Render, Heroku, EC2, etc.
